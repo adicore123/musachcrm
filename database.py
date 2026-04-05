@@ -1,0 +1,10 @@
+from supabase import create_client
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+
+db = create_client(
+    os.getenv("SUPABASE_URL"),
+    os.getenv("SUPABASE_KEY")
+)
