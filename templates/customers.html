@@ -1,0 +1,108 @@
+{% extends "base.html" %}
+{% block content %}
+<div id="view-customers">
+  <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-6 mb-8 fade-up" style="animation-delay: 0.1s;">
+    <div>
+      <h1 class="text-3xl font-bold tracking-tight text-brand-text mb-1">ניהול לקוחות</h1>
+      <p class="text-brand-muted text-sm">צפה, ערוך ונהל את מאגר הלקוחות של המוסך</p>
+    </div>
+    <button onclick="openModal()"
+      class="gradient-btn group relative flex items-center justify-center gap-2 text-brand-text font-bold px-6 py-3 rounded-xl text-sm shadow-pastel transition-all duration-300 w-full sm:w-auto overflow-hidden hover:opacity-90 border border-white/50">
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"/>
+      </svg>
+      <span>לקוח חדש</span>
+    </button>
+  </div>
+
+  <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-8 fade-up" style="animation-delay: 0.2s;">
+    <div class="rounded-2xl p-6 shadow-mint relative overflow-hidden" style="background:#7BEAD4; border:1px solid rgba(0,180,140,0.3)">
+      <div class="absolute -top-4 -left-4 w-20 h-20 rounded-full opacity-20" style="background:#10b981"></div>
+      <div class="flex justify-between items-start mb-4 relative z-10">
+        <div class="text-sm font-semibold" style="color:#0d6e4a">סה"כ לקוחות</div>
+        <div class="p-2 rounded-lg" style="background:rgba(255,255,255,0.6); color:#0d6e4a">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
+        </div>
+      </div>
+      <div id="stat-total" class="text-4xl font-black tracking-tight relative z-10" style="color:#0d6e4a">—</div>
+    </div>
+
+    <div class="bg-brand-surface border border-brand-border rounded-2xl p-6 shadow-sm relative overflow-hidden">
+      <div class="absolute -bottom-4 -right-4 w-20 h-20 rounded-full opacity-40" style="background:#e2e8f0"></div>
+      <div class="flex justify-between items-start mb-4 relative z-10">
+        <div class="text-sm font-semibold text-brand-muted">עם רכב רשום</div>
+        <div class="p-2 rounded-lg bg-brand-bg text-brand-text">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/></svg>
+        </div>
+      </div>
+      <div id="stat-vehicles" class="text-4xl font-black tracking-tight relative z-10 text-brand-text">—</div>
+    </div>
+
+    <div class="bg-brand-surface border border-brand-border rounded-2xl p-6 col-span-2 lg:col-span-2 flex flex-col justify-center shadow-sm relative overflow-hidden">
+      <div class="absolute top-0 right-0 w-32 h-32 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" style="background:rgba(123,234,212,0.35)"></div>
+      <div class="absolute bottom-0 left-0 w-24 h-24 rounded-full blur-2xl translate-y-1/2 -translate-x-1/2" style="background:rgba(226,232,240,0.7)"></div>
+      <div class="text-sm text-brand-muted font-medium mb-3 relative z-10">סטטוס מערכת</div>
+      <div class="flex flex-wrap items-center gap-4 relative z-10">
+        <div id="stat-api" class="flex items-center gap-2 px-3 py-1.5 rounded-lg" style="background:rgba(123,234,212,0.4); border:1px solid rgba(0,180,140,0.3)">
+          <span class="relative flex h-2.5 w-2.5">
+            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-success opacity-75"></span>
+            <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-brand-success"></span>
+          </span>
+          <span class="text-sm font-semibold text-brand-success">API מחובר</span>
+        </div>
+        <div class="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-brand-bg border border-brand-border">
+          <span class="h-2.5 w-2.5 rounded-full bg-slate-400 opacity-70"></span>
+          <span class="text-sm font-medium text-brand-muted">סופהבייס מחובר</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="bg-brand-surface border border-brand-border rounded-2xl shadow-sm fade-up flex flex-col" style="animation-delay: 0.3s; min-height: 500px;">
+    <div class="p-5 border-b border-brand-border">
+      <div class="relative max-w-md">
+        <svg class="absolute right-4 top-1/2 -translate-y-1/2 w-5 h-5 text-brand-muted pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+        </svg>
+        <input id="search" type="text" placeholder="חיפוש לקוח, טלפון או לוחית..."
+          class="w-full bg-brand-bg border border-brand-border rounded-xl pr-12 pl-4 py-3 text-sm text-brand-text placeholder:text-brand-muted transition-all"
+          oninput="filterTable()">
+      </div>
+    </div>
+
+    <div class="overflow-x-auto flex-1 rounded-b-2xl">
+      <table class="w-full text-right border-collapse">
+        <thead>
+          <tr class="bg-brand-bg/50 border-b border-brand-border">
+            <th class="text-xs font-bold text-brand-muted px-6 py-4 uppercase tracking-wider whitespace-nowrap">שם לקוח</th>
+            <th class="text-xs font-bold text-brand-muted px-6 py-4 uppercase tracking-wider hidden sm:table-cell whitespace-nowrap">טלפון</th>
+            <th class="text-xs font-bold text-brand-muted px-6 py-4 uppercase tracking-wider hidden md:table-cell whitespace-nowrap">רכב</th>
+            <th class="text-xs font-bold text-brand-muted px-6 py-4 uppercase tracking-wider hidden lg:table-cell whitespace-nowrap">תאריך הצטרפות</th>
+            <th class="text-xs font-bold text-brand-muted px-4 py-4 uppercase tracking-wider whitespace-nowrap">פעולות</th>
+          </tr>
+        </thead>
+        <tbody id="tbody"></tbody>
+      </table>
+
+      <div id="loading" class="flex flex-col items-center justify-center py-24 gap-4 text-brand-muted">
+        <div class="w-10 h-10 border-4 border-brand-c2 border-t-brand-c3 rounded-full spin shadow-pastel-sm"></div>
+        <div class="text-sm font-medium">טוען נתונים...</div>
+      </div>
+
+      <div id="empty" class="hidden flex-col items-center justify-center py-24 text-center">
+        <div class="w-20 h-20 bg-brand-bg rounded-full flex items-center justify-center mb-5 border border-brand-border shadow-sm">
+          <svg class="w-10 h-10 text-brand-muted" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
+          </svg>
+        </div>
+        <div class="text-brand-text font-bold text-xl mb-2">לא נמצאו לקוחות</div>
+        <div class="text-brand-muted text-sm max-w-sm mx-auto">המאגר ריק כרגע או שהחיפוש לא העלה תוצאות.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% include "repairs.html" %}
+{% include "appointments.html" %}
+{% include "vehicle_check.html" %}
+{% endblock %}

@@ -1,0 +1,88 @@
+<div id="view-repairs" class="hidden">
+  <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-6 mb-8 fade-up" style="animation-delay: 0.1s;">
+    <div>
+      <h1 class="text-3xl font-bold tracking-tight text-brand-text mb-1">תיקונים במוסך</h1>
+      <p class="text-brand-muted text-sm">ניהול הזמנות עבודה, רכב ולקוח במקום אחד</p>
+    </div>
+    <button type="button" onclick="openRepairModal()"
+      class="gradient-btn group relative flex items-center justify-center gap-2 text-brand-text font-bold px-6 py-3 rounded-xl text-sm shadow-pastel transition-all duration-300 w-full sm:w-auto overflow-hidden hover:opacity-90 border border-white/50">
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"/>
+      </svg>
+      <span>תיקון חדש</span>
+    </button>
+  </div>
+
+  <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-8 fade-up" style="animation-delay: 0.2s;">
+    <div class="rounded-2xl p-6 shadow-mint relative overflow-hidden" style="background:#7BEAD4; border:1px solid rgba(0,180,140,0.3)">
+      <div class="absolute -top-4 -left-4 w-20 h-20 rounded-full opacity-20" style="background:#10b981"></div>
+      <div class="flex justify-between items-start mb-4 relative z-10">
+        <div class="text-sm font-semibold" style="color:#0d6e4a">סה״כ תיקונים</div>
+        <div class="p-2 rounded-lg" style="background:rgba(255,255,255,0.6); color:#0d6e4a">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
+        </div>
+      </div>
+      <div id="stat-rep-total" class="text-4xl font-black tracking-tight relative z-10" style="color:#0d6e4a">—</div>
+    </div>
+    <div class="bg-brand-surface border border-brand-border rounded-2xl p-6 shadow-sm relative overflow-hidden">
+      <div class="absolute -bottom-4 -right-4 w-20 h-20 rounded-full opacity-40" style="background:#e2e8f0"></div>
+      <div class="flex justify-between items-start mb-4 relative z-10">
+        <div class="text-sm font-semibold text-brand-muted">בטיפול / פתוח</div>
+        <div class="p-2 rounded-lg bg-brand-bg text-brand-text">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        </div>
+      </div>
+      <div id="stat-rep-open" class="text-4xl font-black tracking-tight relative z-10 text-brand-text">—</div>
+    </div>
+    <div class="bg-brand-surface border border-brand-border rounded-2xl p-6 shadow-sm relative overflow-hidden col-span-2">
+      <div class="flex justify-between items-start mb-4 relative z-10">
+        <div class="text-sm font-semibold text-brand-muted">הושלמו</div>
+        <div class="p-2 rounded-lg bg-brand-bg text-brand-text">
+          <svg class="w-5 h-5 text-brand-success" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        </div>
+      </div>
+      <div id="stat-rep-done" class="text-4xl font-black tracking-tight relative z-10 text-brand-success">—</div>
+    </div>
+  </div>
+
+  <div class="bg-brand-surface border border-brand-border rounded-2xl shadow-sm fade-up flex flex-col" style="animation-delay: 0.3s; min-height: 500px;">
+    <div class="p-5 border-b border-brand-border">
+      <div class="relative max-w-md">
+        <svg class="absolute right-4 top-1/2 -translate-y-1/2 w-5 h-5 text-brand-muted pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+        </svg>
+        <input id="search-repairs" type="text" placeholder="חיפוש לפי לקוח, לוחית, תיאור או דגם..."
+          class="w-full bg-brand-bg border border-brand-border rounded-xl pr-12 pl-4 py-3 text-sm text-brand-text placeholder:text-brand-muted transition-all"
+          oninput="filterRepairsTable()">
+      </div>
+    </div>
+    <div class="overflow-x-auto flex-1 rounded-b-2xl">
+      <table class="w-full text-right border-collapse">
+        <thead>
+          <tr class="bg-brand-bg/50 border-b border-brand-border">
+            <th class="text-xs font-bold text-brand-muted px-6 py-4 uppercase tracking-wider whitespace-nowrap">לקוח</th>
+            <th class="text-xs font-bold text-brand-muted px-6 py-4 uppercase tracking-wider hidden sm:table-cell whitespace-nowrap">לוחית</th>
+            <th class="text-xs font-bold text-brand-muted px-6 py-4 uppercase tracking-wider hidden md:table-cell whitespace-nowrap">רכב</th>
+            <th class="text-xs font-bold text-brand-muted px-6 py-4 uppercase tracking-wider hidden lg:table-cell whitespace-nowrap">תיאור</th>
+            <th class="text-xs font-bold text-brand-muted px-6 py-4 uppercase tracking-wider whitespace-nowrap">סטטוס</th>
+            <th class="text-xs font-bold text-brand-muted px-6 py-4 uppercase tracking-wider whitespace-nowrap">מחיר</th>
+            <th class="text-xs font-bold text-brand-muted px-6 py-4 uppercase tracking-wider hidden lg:table-cell whitespace-nowrap">נוצר</th>
+            <th class="text-xs font-bold text-brand-muted px-4 py-4 uppercase tracking-wider whitespace-nowrap">פעולות</th>
+          </tr>
+        </thead>
+        <tbody id="r-tbody"></tbody>
+      </table>
+      <div id="r-loading" class="hidden flex-col items-center justify-center py-24 gap-4 text-brand-muted">
+        <div class="w-10 h-10 border-4 border-brand-c2 border-t-brand-c3 rounded-full spin shadow-pastel-sm"></div>
+        <div class="text-sm font-medium">טוען תיקונים...</div>
+      </div>
+      <div id="r-empty" class="hidden flex-col items-center justify-center py-24 text-center">
+        <div class="w-20 h-20 bg-brand-bg rounded-full flex items-center justify-center mb-5 border border-brand-border shadow-sm">
+          <svg class="w-10 h-10 text-brand-muted" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+        </div>
+        <div class="text-brand-text font-bold text-xl mb-2">אין תיקונים עדיין</div>
+        <div class="text-brand-muted text-sm max-w-sm mx-auto">פתחו תיקון חדש או הריצו את סקריפט ה-SQL ב-Supabase.</div>
+      </div>
+    </div>
+  </div>
+</div>

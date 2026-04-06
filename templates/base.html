@@ -1,0 +1,779 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="he">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NusachCRM | מוסך (עיצוב בהיר)</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/css/styles.css">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Assistant', 'system-ui', 'sans-serif'],
+            mono: ['ui-monospace', 'SFMono-Regular', 'Menlo', 'Monaco', 'Consolas', 'monospace'],
+          },
+          colors: {
+            brand: {
+              c1: '#7BEAD4',
+              c2: '#7BC9EA',
+              c3: '#7B91EA',
+              c4: '#7BEAD4',
+              navy: '#ffffff',
+              bg: '#f8fafc',
+              surface: '#ffffff',
+              border: '#e2e8f0',
+              text: '#0f172a',
+              muted: '#64748b',
+              success: '#10b981',
+              danger: '#ef4444',
+            }
+          },
+          boxShadow: {
+            'pastel':     '0 10px 25px -5px rgba(123, 201, 234, 0.45)',
+            'pastel-sm':  '0 4px 6px -1px rgba(123, 201, 234, 0.35)',
+            'mint':       '0 10px 25px -5px rgba(123, 234, 212, 0.55)',
+            'navy':       '0 10px 30px -5px rgba(15, 23, 42, 0.06)',
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="text-brand-text min-h-screen antialiased selection:bg-brand-c2 selection:text-brand-text overflow-hidden">
+
+<div class="flex h-screen w-full">
+
+  <!-- ═══════════════════════════════════════════════════════ SIDEBAR -->
+  <aside class="hidden md:flex flex-col w-64 z-20 flex-shrink-0 shadow-navy bg-white border-l border-brand-border">
+
+    <!-- Logo Area -->
+    <div class="h-20 flex items-center px-6" style="border-bottom:1px solid rgba(15,23,42,0.08)">
+      <div class="flex items-center gap-3 w-full">
+        <div class="w-10 h-10 rounded-xl gradient-btn flex items-center justify-center shadow-mint flex-shrink-0">
+          <svg class="w-5 h-5 text-brand-text" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/>
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+          </svg>
+        </div>
+        <div>
+          <div class="font-bold text-lg leading-none text-brand-text tracking-wide">Nusach<span style="color:#7B91EA">CRM</span></div>
+          <div class="text-xs mt-0.5 text-brand-muted">מערכת ניהול מוסך</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Navigation Links -->
+    <nav class="flex-1 px-4 py-6 space-y-1 overflow-y-auto">
+      <a href="#" id="nav-customers" onclick="setView('customers'); return false;"
+         class="flex items-center gap-3 px-4 py-3 rounded-xl font-bold transition-all border-r-4"
+         style="background:rgba(123,201,234,0.13); border-color:#7BC9EA; color:#0c4a6e">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
+        לקוחות
+      </a>
+
+      <a href="#" id="nav-repairs" onclick="setView('repairs'); return false;"
+         class="flex items-center gap-3 px-4 py-3 rounded-xl font-medium transition-all nav-inactive"
+         style="color:#64748b" onmouseover="navHover(this,1)" onmouseout="navHover(this,0)">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+        תיקונים
+      </a>
+      <a href="#" id="nav-appointments" onclick="setView('appointments'); return false;"
+         class="flex items-center gap-3 px-4 py-3 rounded-xl font-medium transition-all nav-inactive"
+         style="color:#64748b" onmouseover="navHover(this,1)" onmouseout="navHover(this,0)">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+        תורים
+      </a>
+      <a href="#" id="nav-vehicle-check" onclick="setView('vehicle-check'); return false;"
+         class="flex items-center gap-3 px-4 py-3 rounded-xl font-medium transition-all nav-inactive"
+         style="color:#64748b" onmouseover="navHover(this,1)" onmouseout="navHover(this,0)">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17a2 2 0 11-4 0 2 2 0 014 0zM19 17a2 2 0 11-4 0 2 2 0 014 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16V6a1 1 0 00-1-1H4a1 1 0 00-1 1v10a1 1 0 001 1h1m8-1a1 1 0 01-1 1H9m4-1V8a1 1 0 011-1h2.586a1 1 0 01.707.293l3.414 3.414a1 1 0 01.293.707V16a1 1 0 01-1 1h-1m-6-1a1 1 0 001 1h1M5 17a2 2 0 104 0m-4 0a2 2 0 114 0m6 0a2 2 0 104 0m-4 0a2 2 0 114 0"/></svg>
+        בדיקת רכב
+      </a>
+    </nav>
+
+    <!-- User Profile Bottom -->
+    <div class="p-4" style="border-top:1px solid rgba(15,23,42,0.08)">
+      <div class="flex items-center gap-3 px-4 py-3 rounded-xl cursor-pointer transition-all"
+           onmouseover="this.style.background='rgba(15,23,42,0.06)'" onmouseout="this.style.background=''">
+        <div class="w-9 h-9 rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0"
+             style="background:rgba(123,201,234,0.18); color:#0c4a6e; border:1px solid rgba(123,201,234,0.4)">NL</div>
+        <div class="flex-1 min-w-0">
+          <div class="text-sm font-bold text-brand-text truncate">Nusach Leads</div>
+          <div class="text-xs truncate text-brand-muted">מנהל מערכת</div>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ═══════════════════════════════════════════════════════ MAIN CONTENT AREA -->
+  <div class="flex-1 flex flex-col h-screen overflow-hidden relative bg-brand-bg">
+
+    <!-- Mobile Header -->
+    <header class="md:hidden bg-brand-surface border-b border-brand-border h-16 flex items-center justify-between px-4 z-30">
+      <div class="flex items-center gap-2">
+        <div class="w-8 h-8 rounded-lg gradient-btn flex items-center justify-center text-brand-text">
+          <span class="font-bold text-xs">NC</span>
+        </div>
+        <span class="font-bold text-brand-text">NusachCRM</span>
+      </div>
+      <button id="burger" class="p-2 rounded-lg text-brand-muted hover:bg-brand-bg">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+        </svg>
+      </button>
+    </header>
+
+    <!-- Mobile Slide-over Menu -->
+    <div id="mobile-menu" class="fixed inset-0 z-50 hidden md:hidden">
+      <div class="absolute inset-0 bg-brand-text/20 backdrop-blur-sm" onclick="toggleMobileMenu()"></div>
+      <div class="absolute top-0 right-0 bottom-0 w-64 bg-brand-surface border-l border-brand-border shadow-2xl flex flex-col">
+        <div class="h-16 flex items-center justify-between px-6 border-b border-brand-border">
+          <span class="font-bold text-lg">תפריט</span>
+          <button onclick="toggleMobileMenu()" class="p-2 text-brand-muted"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg></button>
+        </div>
+        <nav class="flex-1 px-4 py-6 space-y-2 overflow-y-auto">
+          <a href="#" onclick="setView('customers'); toggleMobileMenu(); return false;" class="block px-4 py-3 bg-brand-c3/30 text-brand-text rounded-xl font-bold border-r-4 border-brand-c3">לקוחות</a>
+          <a href="#" onclick="setView('repairs'); toggleMobileMenu(); return false;" class="block px-4 py-3 text-brand-muted hover:bg-brand-bg rounded-xl font-medium">תיקונים</a>
+          <a href="#" onclick="setView('appointments'); toggleMobileMenu(); return false;" class="block px-4 py-3 text-brand-muted hover:bg-brand-bg rounded-xl font-medium">תורים</a>
+          <a href="#" onclick="setView('vehicle-check'); toggleMobileMenu(); return false;" class="block px-4 py-3 text-brand-muted hover:bg-brand-bg rounded-xl font-medium">בדיקת רכב</a>
+        </nav>
+      </div>
+    </div>
+
+    <!-- Scrollable Page Content -->
+    <main class="flex-1 overflow-y-auto p-4 sm:p-8 custom-scrollbar">
+
+    {% block content %}{% endblock %}
+
+    </main>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ CUSTOMER MODAL -->
+<div id="modal" class="fixed inset-0 z-50 hidden items-end sm:items-center justify-center p-0 sm:p-4">
+  <div class="absolute inset-0 bg-brand-text/30 backdrop-blur-sm" onclick="closeModal()"></div>
+  <div class="modal-enter relative w-full sm:max-w-2xl max-h-[95vh] sm:max-h-[90vh]
+              bg-brand-surface border border-brand-border
+              rounded-t-3xl sm:rounded-2xl shadow-2xl
+              flex flex-col overflow-hidden">
+
+    <div class="flex items-center justify-between px-5 py-4 sm:px-8 sm:py-5 border-b border-brand-border bg-brand-bg flex-shrink-0">
+      <div>
+        <h2 id="modal-title" class="text-lg sm:text-2xl font-bold text-brand-text tracking-tight">לקוח חדש</h2>
+        <p id="modal-subtitle" class="text-xs sm:text-sm text-brand-muted mt-0.5">הזן את פרטי הלקוח והרכב למערכת</p>
+      </div>
+      <button onclick="closeModal()" class="p-2 rounded-xl text-brand-muted hover:text-brand-text hover:bg-brand-border/50 transition-colors bg-brand-surface border border-brand-border flex-shrink-0">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+        </svg>
+      </button>
+    </div>
+
+    <form id="form" onsubmit="submitCustomer(event)" class="overflow-y-auto flex-1 px-5 py-5 sm:px-8 sm:py-7 space-y-5 sm:space-y-7">
+
+      <div>
+        <div class="flex items-center gap-3 mb-5">
+          <div class="w-8 h-8 rounded-lg bg-brand-c1/50 text-blue-800 flex items-center justify-center">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+          </div>
+          <span class="text-lg font-bold text-brand-text">פרטי קשר</span>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+          <div class="space-y-1.5">
+            <label class="block text-sm font-semibold text-brand-text ml-1">שם פרמי <span class="text-brand-danger">*</span></label>
+            <input id="f-first" type="text" required placeholder="לדוגמה: ישראל"
+              class="w-full bg-brand-bg border border-brand-border rounded-xl px-4 py-3 text-sm text-brand-text placeholder:text-brand-muted transition-colors">
+          </div>
+          <div class="space-y-1.5">
+            <label class="block text-sm font-semibold text-brand-text ml-1">שם משפחה <span class="text-brand-danger">*</span></label>
+            <input id="f-last" type="text" required placeholder="לדוגמה: ישראלי"
+              class="w-full bg-brand-bg border border-brand-border rounded-xl px-4 py-3 text-sm text-brand-text placeholder:text-brand-muted transition-colors">
+          </div>
+          <div class="sm:col-span-2 space-y-1.5">
+            <label class="block text-sm font-semibold text-brand-text ml-1">טלפון נייד</label>
+            <input id="f-phone" type="tel" placeholder="050-0000000" dir="ltr"
+              class="w-full bg-brand-bg border border-brand-border rounded-xl px-4 py-3 text-sm text-brand-text placeholder:text-brand-muted text-right transition-colors focus:text-left">
+          </div>
+        </div>
+      </div>
+
+      <hr class="border-brand-border">
+
+      <div>
+        <div class="flex items-center gap-3 mb-5">
+          <div class="w-8 h-8 rounded-lg bg-brand-c3/50 text-purple-800 flex items-center justify-center">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/></svg>
+          </div>
+          <span class="text-lg font-bold text-brand-text">פרטי רכב</span>
+        </div>
+
+        <div class="mb-5">
+          <label class="block text-sm font-semibold text-brand-text ml-1 mb-1.5">מספר רישוי (משיכת נתונים אוטומטית)</label>
+          <div class="relative group">
+            <input id="f-plate" type="text" placeholder="123-45-678" dir="ltr" maxlength="10"
+              class="w-full bg-brand-bg border border-brand-border rounded-xl px-4 py-4 text-lg text-brand-text placeholder:text-brand-muted font-mono tracking-[0.3em] text-center uppercase transition-all"
+              oninput="onPlateInput(this.value)">
+            <div id="ps-spin" class="hidden absolute left-4 top-1/2 -translate-y-1/2 w-6 h-6 border-2 border-brand-c2 border-t-transparent rounded-full spin"></div>
+            <div id="ps-ok"   class="hidden absolute left-4 top-1/2 -translate-y-1/2 bg-brand-success/20 text-brand-success p-1.5 rounded-md">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg>
+            </div>
+            <div id="ps-err"  class="hidden absolute left-4 top-1/2 -translate-y-1/2 bg-brand-danger/20 text-brand-danger p-1.5 rounded-md">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M6 18L18 6M6 6l12 12"/></svg>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-brand-bg border border-brand-border rounded-xl p-5 relative overflow-hidden shadow-inner">
+          <div class="flex items-center gap-2 mb-4 relative z-10">
+            <span class="text-xs font-bold text-brand-muted uppercase tracking-wider">נתונים ממשרד התחבורה</span>
+            <div id="vl-spin" class="hidden w-3 h-3 border border-brand-muted border-t-transparent rounded-full spin"></div>
+          </div>
+
+          <div class="grid grid-cols-2 gap-y-5 gap-x-4 relative z-10">
+            <div>
+              <div class="text-[10px] text-brand-muted uppercase tracking-wider mb-1">יצרן</div>
+              <div id="v-make"  class="text-sm text-brand-muted italic">ממתין להזנה...</div>
+            </div>
+            <div>
+              <div class="text-[10px] text-brand-muted uppercase tracking-wider mb-1">דגם</div>
+              <div id="v-model" class="text-sm text-brand-muted italic">ממתין להזנה...</div>
+            </div>
+            <div>
+              <div class="text-[10px] text-brand-muted uppercase tracking-wider mb-1">שנת ייצור</div>
+              <div id="v-year"  class="text-sm text-brand-muted italic">ממתין להזנה...</div>
+            </div>
+            <div>
+              <div class="text-[10px] text-brand-muted uppercase tracking-wider mb-1">צבע</div>
+              <div id="v-color" class="text-sm text-brand-muted italic">ממתין להזנה...</div>
+            </div>
+            <div class="col-span-2 bg-brand-surface rounded-lg p-3 border border-brand-border shadow-sm">
+              <div class="text-[10px] text-brand-muted uppercase tracking-wider mb-1">תוקף טסט</div>
+              <div id="v-test"  class="text-sm text-brand-muted italic">ממתין להזנה...</div>
+            </div>
+          </div>
+
+          <div class="mt-4 pt-4 border-t border-brand-border relative z-10">
+            <button type="button" onclick="toggleTech()"
+              class="flex items-center justify-between w-full p-2 rounded-lg hover:bg-white transition-colors text-xs text-blue-700 font-bold border border-transparent hover:border-brand-border">
+              <span id="tech-label">הצג נתונים טכניים נוספים</span>
+              <svg id="tech-arrow" class="w-4 h-4 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+              </svg>
+            </button>
+            <div id="tech-grid" class="hidden mt-3 grid grid-cols-2 gap-3 text-xs"></div>
+          </div>
+        </div>
+      </div>
+
+    </form>
+
+    <div class="px-5 py-4 sm:px-8 sm:py-5 border-t border-brand-border bg-brand-bg flex-shrink-0 flex flex-col-reverse sm:flex-row gap-3 sm:justify-end">
+      <button type="button" onclick="closeModal()"
+        class="w-full sm:w-auto px-6 py-3 sm:py-2.5 rounded-xl border border-brand-border text-brand-text bg-brand-surface hover:bg-brand-border/30 font-bold transition-all text-sm shadow-sm">
+        ביטול
+      </button>
+      <button type="submit" form="form" id="save-btn"
+        class="w-full sm:w-auto px-8 py-3 sm:py-2.5 rounded-xl gradient-btn text-brand-text font-bold shadow-pastel transition-all flex items-center justify-center gap-2 text-sm border border-white/50 hover:shadow-pastel-sm">
+        <span id="save-label">שמור לקוח</span>
+        <div id="save-spin" class="hidden w-4 h-4 border-2 border-brand-text border-t-transparent rounded-full spin"></div>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ REPAIR MODAL -->
+<div id="repair-modal" class="fixed inset-0 z-50 hidden items-end sm:items-center justify-center p-0 sm:p-4">
+  <div class="absolute inset-0 bg-brand-text/30 backdrop-blur-sm" onclick="closeRepairModal()"></div>
+  <div class="modal-enter relative w-full sm:max-w-2xl max-h-[95vh] sm:max-h-[90vh]
+              bg-brand-surface border border-brand-border rounded-t-3xl sm:rounded-2xl shadow-2xl flex flex-col overflow-hidden">
+    <div class="flex items-center justify-between px-5 py-4 sm:px-8 sm:py-5 border-b border-brand-border bg-brand-bg flex-shrink-0">
+      <div>
+        <h2 id="repair-modal-title" class="text-lg sm:text-2xl font-bold text-brand-text tracking-tight">תיקון חדש</h2>
+        <p class="text-xs sm:text-sm text-brand-muted mt-0.5">בחרו לקוח — פרטי הרכב נטענים אוטומטית ממשרד התחבורה</p>
+      </div>
+      <button type="button" onclick="closeRepairModal()" class="p-2 rounded-xl text-brand-muted hover:text-brand-text hover:bg-brand-border/50 transition-colors bg-brand-surface border border-brand-border flex-shrink-0">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+      </button>
+    </div>
+
+    <form id="repair-form" onsubmit="submitRepair(event)" class="overflow-y-auto flex-1 px-5 py-5 sm:px-8 sm:py-7 space-y-5 sm:space-y-6">
+      <div>
+        <div class="flex items-center gap-3 mb-4">
+          <div class="w-8 h-8 rounded-lg bg-brand-c1/50 text-blue-800 flex items-center justify-center">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+          </div>
+          <span class="text-lg font-bold text-brand-text">לקוח</span>
+        </div>
+        <div class="flex flex-col sm:flex-row gap-3 sm:items-end">
+          <div class="flex-1 space-y-1.5">
+            <label class="block text-sm font-semibold text-brand-text ml-1">בחר לקוח <span class="text-brand-danger">*</span></label>
+            <select id="r-customer" required
+              class="w-full bg-brand-bg border border-brand-border rounded-xl px-4 py-3 text-sm text-brand-text"
+              onchange="onRepairCustomerChange()">
+              <option value="">— בחרו מהרשימה —</option>
+            </select>
+          </div>
+          <button type="button" onclick="openNewCustomerFromRepair()"
+            class="w-full sm:w-auto px-5 py-3 rounded-xl border-2 border-dashed border-brand-c2 text-brand-text font-bold text-sm hover:bg-brand-c2/20 transition-colors whitespace-nowrap">
+            + לקוח חדש
+          </button>
+        </div>
+      </div>
+
+      <hr class="border-brand-border">
+
+      <div>
+        <div class="flex items-center gap-3 mb-4">
+          <div class="w-8 h-8 rounded-lg bg-brand-c3/50 text-purple-800 flex items-center justify-center">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/></svg>
+          </div>
+          <span class="text-lg font-bold text-brand-text">פרטי רכב (אוטומטי)</span>
+        </div>
+        <div class="bg-brand-bg border border-brand-border rounded-xl p-5 relative overflow-hidden shadow-inner">
+          <div class="flex items-center gap-2 mb-4 relative z-10">
+            <span class="text-xs font-bold text-brand-muted uppercase tracking-wider">נתונים ממשרד התחבורה</span>
+            <div id="r-vl-spin" class="hidden w-3 h-3 border border-brand-muted border-t-transparent rounded-full spin"></div>
+          </div>
+          <div class="grid grid-cols-2 gap-y-4 gap-x-4 relative z-10">
+            <div>
+              <div class="text-[10px] text-brand-muted uppercase tracking-wider mb-1">יצרן</div>
+              <div id="r-v-make" class="text-sm text-brand-muted italic">בחרו לקוח עם לוחית...</div>
+            </div>
+            <div>
+              <div class="text-[10px] text-brand-muted uppercase tracking-wider mb-1">דגם</div>
+              <div id="r-v-model" class="text-sm text-brand-muted italic">—</div>
+            </div>
+            <div>
+              <div class="text-[10px] text-brand-muted uppercase tracking-wider mb-1">שנת ייצור</div>
+              <div id="r-v-year" class="text-sm text-brand-muted italic">—</div>
+            </div>
+            <div>
+              <div class="text-[10px] text-brand-muted uppercase tracking-wider mb-1">צבע</div>
+              <div id="r-v-color" class="text-sm text-brand-muted italic">—</div>
+            </div>
+            <div class="col-span-2 bg-brand-surface rounded-lg p-3 border border-brand-border shadow-sm">
+              <div class="text-[10px] text-brand-muted uppercase tracking-wider mb-1">תוקף טסט</div>
+              <div id="r-v-test" class="text-sm text-brand-muted italic">—</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <hr class="border-brand-border">
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+        <div class="sm:col-span-2 space-y-1.5">
+          <label class="block text-sm font-semibold text-brand-text ml-1">תיאור העבודה / התקלה <span class="text-brand-danger">*</span></label>
+          <textarea id="r-description" required rows="2" placeholder="לדוגמה: החלפת שמן, רעש במנוע..."
+            class="w-full bg-brand-bg border border-brand-border rounded-xl px-4 py-3 text-sm text-brand-text placeholder:text-brand-muted resize-y"></textarea>
+        </div>
+
+        <div class="sm:col-span-2">
+          <div class="flex items-center justify-between mb-2">
+            <label class="block text-sm font-semibold text-brand-text">פריטי התיקון</label>
+            <div class="flex gap-2">
+              <button type="button" onclick="openPriceListModal()"
+                class="text-xs px-3 py-1.5 rounded-lg font-bold border border-brand-border text-brand-muted hover:bg-brand-bg transition-all">
+                🔧 מחירון
+              </button>
+              <button type="button" onclick="addRepairItem()"
+                class="text-xs px-3 py-1.5 rounded-lg font-bold text-white transition-all hover:opacity-90"
+                style="background: linear-gradient(135deg, #7BEAD4, #7BC9EA);">
+                + הוסף פריט
+              </button>
+            </div>
+          </div>
+          <div class="bg-brand-bg border border-brand-border rounded-xl p-3 mb-3">
+            <div class="grid grid-cols-12 gap-2 text-xs font-bold text-brand-muted mb-2 px-2">
+              <div class="col-span-4">פריט</div>
+              <div class="col-span-2 text-center">עלות חלק</div>
+              <div class="col-span-2 text-center">מחיר מכירה</div>
+              <div class="col-span-2 text-center">עבודה</div>
+              <div class="col-span-2 text-center">סה"כ</div>
+            </div>
+            <div id="r-items-container" class="space-y-2">
+            </div>
+          </div>
+          <div class="bg-brand-bg border border-brand-border rounded-xl p-4">
+            <div class="flex items-center justify-between mb-3">
+              <label class="flex items-center gap-3 cursor-pointer">
+                <input id="r-vat-enabled" type="checkbox" checked
+                  class="w-5 h-5 rounded border-brand-border text-brand-success focus:ring-brand-success"
+                  onchange="calculateRepairFinalPrice()">
+                <span class="text-sm font-semibold text-brand-text">כולל מע"מ (17%)</span>
+              </label>
+              <div class="text-left">
+                <span id="r-subtotal-display" class="text-sm text-brand-muted">סכום: ₪0.00</span>
+              </div>
+            </div>
+            <div class="flex items-center justify-between p-3 rounded-lg" style="background: linear-gradient(135deg, #7BEAD4, #7BC9EA);">
+              <span class="text-sm font-bold text-blue-900">מחיר סופי ללקוח</span>
+              <span id="r-final-price-display" class="text-2xl font-black text-blue-900">₪0.00</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="space-y-1.5">
+          <label class="block text-sm font-semibold text-brand-text ml-1">סטטוס</label>
+          <select id="r-status" class="w-full bg-brand-bg border border-brand-border rounded-xl px-4 py-3 text-sm text-brand-text">
+            <option value="open">פתוח</option>
+            <option value="in_progress">בטיפול</option>
+            <option value="done">הושלם</option>
+            <option value="cancelled">בוטל</option>
+          </select>
+        </div>
+        <div class="space-y-1.5 sm:col-span-2">
+          <label class="block text-sm font-semibold text-brand-text ml-1">הערות נוספות</label>
+          <input id="r-notes" type="text" placeholder="אופציונלי"
+            class="w-full bg-brand-bg border border-brand-border rounded-xl px-4 py-3 text-sm text-brand-text placeholder:text-brand-muted">
+        </div>
+      </div>
+    </form>
+
+    <div class="px-5 py-4 sm:px-8 sm:py-5 border-t border-brand-border bg-brand-bg flex-shrink-0 flex flex-col-reverse sm:flex-row gap-3 sm:justify-end">
+      <button type="button" onclick="closeRepairModal()"
+        class="w-full sm:w-auto px-6 py-3 sm:py-2.5 rounded-xl border border-brand-border text-brand-text bg-brand-surface hover:bg-brand-border/30 font-bold transition-all text-sm shadow-sm">ביטול</button>
+      <button type="submit" form="repair-form" id="repair-save-btn"
+        class="w-full sm:w-auto px-8 py-3 sm:py-2.5 rounded-xl gradient-btn text-brand-text font-bold shadow-pastel transition-all flex items-center justify-center gap-2 text-sm border border-white/50">
+        <span id="repair-save-label">שמור תיקון</span>
+        <div id="repair-save-spin" class="hidden w-4 h-4 border-2 border-brand-text border-t-transparent rounded-full spin"></div>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ PRICE LIST MODAL -->
+<div id="price-list-modal" class="fixed inset-0 z-[70] hidden items-end sm:items-center justify-center p-0 sm:p-4">
+  <div class="absolute inset-0 bg-brand-text/30 backdrop-blur-sm" onclick="closePriceListModal()"></div>
+  <div class="modal-enter relative w-full sm:max-w-3xl max-h-[95vh] sm:max-h-[90vh]
+              bg-brand-surface border border-brand-border rounded-t-3xl sm:rounded-2xl shadow-2xl flex flex-col overflow-hidden">
+    <div class="flex items-center justify-between px-5 py-4 sm:px-8 sm:py-5 border-b border-brand-border bg-brand-bg flex-shrink-0">
+      <div>
+        <h2 class="text-lg sm:text-2xl font-bold text-brand-text tracking-tight">🔧 ניהול מחירון</h2>
+        <p class="text-xs sm:text-sm text-brand-muted mt-0.5">הוספה ועריכה של פריטים ומחירים</p>
+      </div>
+      <button type="button" onclick="closePriceListModal()" class="p-2 rounded-xl text-brand-muted hover:text-brand-text hover:bg-brand-border/50 transition-colors bg-brand-surface border border-brand-border flex-shrink-0">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+      </button>
+    </div>
+
+    <div class="overflow-y-auto flex-1 px-5 py-5 sm:px-8 sm:py-6">
+      <div class="flex flex-col sm:flex-row gap-3 mb-6">
+        <select id="pl-category-filter" onchange="renderPriceListTable()"
+          class="flex-1 bg-brand-bg border border-brand-border rounded-xl px-4 py-3 text-sm text-brand-text">
+          <option value="">כל הקטגוריות</option>
+          <option value="oils">שמנים</option>
+          <option value="filters">מסננים</option>
+          <option value="brakes">בלמים</option>
+          <option value="engine">חלקי מנוע</option>
+          <option value="labor">עבודה</option>
+          <option value="other">אחר</option>
+        </select>
+        <button type="button" onclick="openPriceListItemModal()"
+          class="px-5 py-3 rounded-xl font-bold text-sm text-white transition-all hover:opacity-90 whitespace-nowrap"
+          style="background: linear-gradient(135deg, #7BEAD4, #7BC9EA);">
+          + פריט חדש
+        </button>
+      </div>
+
+      <div id="pl-loading" class="flex flex-col items-center justify-center py-12 gap-3 text-brand-muted">
+        <div class="w-8 h-8 border-3 border-brand-c2 border-t-brand-c3 rounded-full spin"></div>
+        <span class="text-sm">טוען מחירון...</span>
+      </div>
+
+      <div id="pl-empty" class="hidden flex-col items-center justify-center py-12 text-center">
+        <div class="text-4xl mb-3">📋</div>
+        <div class="text-brand-text font-bold">אין פריטים במחירון</div>
+        <div class="text-brand-muted text-sm">הוסף פריט חדש כדי להתחיל</div>
+      </div>
+
+      <div id="pl-content" class="hidden space-y-4"></div>
+    </div>
+  </div>
+</div>
+
+<!-- Price List Item Form Modal -->
+<div id="pl-item-modal" class="fixed inset-0 z-[80] hidden items-end sm:items-center justify-center p-0 sm:p-4">
+  <div class="absolute inset-0 bg-brand-text/30 backdrop-blur-sm" onclick="closePriceListItemModal()"></div>
+  <div class="modal-enter relative w-full sm:max-w-md max-h-[95vh] sm:max-h-[85vh]
+              bg-brand-surface border border-brand-border rounded-t-3xl sm:rounded-2xl shadow-2xl flex flex-col overflow-hidden">
+    <div class="flex items-center justify-between px-5 py-4 border-b border-brand-border bg-brand-bg flex-shrink-0">
+      <h2 id="pl-item-title" class="text-lg font-bold text-brand-text">פריט חדש</h2>
+      <button type="button" onclick="closePriceListItemModal()" class="p-2 rounded-xl text-brand-muted hover:text-brand-text hover:bg-brand-border/50 transition-colors bg-brand-surface border border-brand-border">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+      </button>
+    </div>
+    <form id="pl-item-form" onsubmit="submitPriceListItem(event)" class="overflow-y-auto flex-1 px-5 py-5 space-y-4">
+      <input type="hidden" id="pl-item-id">
+      <div>
+        <label class="block text-sm font-semibold text-brand-text mb-1.5">קטגוריה <span class="text-brand-danger">*</span></label>
+        <select id="pl-item-category" required
+          class="w-full bg-brand-bg border border-brand-border rounded-xl px-4 py-3 text-sm text-brand-text">
+          <option value="oils">שמנים</option>
+          <option value="filters">מסננים</option>
+          <option value="brakes">בלמים</option>
+          <option value="engine">חלקי מנוע</option>
+          <option value="labor">עבודה</option>
+          <option value="other">אחר</option>
+        </select>
+      </div>
+      <div>
+        <label class="block text-sm font-semibold text-brand-text mb-1.5">שם הפריט <span class="text-brand-danger">*</span></label>
+        <input id="pl-item-name" type="text" required placeholder="לדוגמה: שמן מנוע 5W-30"
+          class="w-full bg-brand-bg border border-brand-border rounded-xl px-4 py-3 text-sm text-brand-text">
+      </div>
+      <div class="grid grid-cols-3 gap-3">
+        <div>
+          <label class="block text-sm font-semibold text-brand-text mb-1.5">עלות חלק</label>
+          <input id="pl-item-part-cost" type="number" min="0" step="0.01" placeholder="₪0" dir="ltr"
+            class="w-full bg-brand-bg border border-brand-border rounded-xl px-4 py-3 text-sm text-brand-text text-left">
+        </div>
+        <div>
+          <label class="block text-sm font-semibold text-brand-text mb-1.5">מחיר מכירה</label>
+          <input id="pl-item-sale-price" type="number" min="0" step="0.01" placeholder="₪0" dir="ltr"
+            class="w-full bg-brand-bg border border-brand-border rounded-xl px-4 py-3 text-sm text-brand-text text-left">
+        </div>
+        <div>
+          <label class="block text-sm font-semibold text-brand-text mb-1.5">עבודה</label>
+          <input id="pl-item-labor-cost" type="number" min="0" step="0.01" placeholder="₪0" dir="ltr"
+            class="w-full bg-brand-bg border border-brand-border rounded-xl px-4 py-3 text-sm text-brand-text text-left">
+        </div>
+      </div>
+      <div class="pt-2">
+        <button type="submit"
+          class="w-full py-3 rounded-xl font-bold text-sm text-white transition-all hover:opacity-90"
+          style="background: linear-gradient(135deg, #7BEAD4, #7BC9EA);">
+          שמור פריט
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ WHATSAPP CONFIRM MODAL -->
+<div id="wa-confirm-modal" class="fixed inset-0 z-[60] hidden items-center justify-center p-4">
+  <div class="absolute inset-0 bg-brand-text/30 backdrop-blur-sm" onclick="waConfirmReject()"></div>
+  <div class="modal-enter relative w-full max-w-sm bg-brand-surface border border-brand-border rounded-2xl shadow-2xl overflow-hidden">
+    <div class="px-6 pt-6 pb-4 text-center">
+      <div class="w-16 h-16 rounded-2xl mx-auto mb-4 flex items-center justify-center" style="background:#7BEAD4">
+        <svg class="w-8 h-8" style="color:#0d6e4a" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+        </svg>
+      </div>
+      <div class="text-xs font-bold text-brand-success uppercase tracking-wider mb-1">התור נשמר בהצלחה!</div>
+      <h3 class="text-xl font-black text-brand-text mb-1">לשלוח תזכורת?</h3>
+      <p class="text-sm text-brand-muted">שלחו ל<span id="wa-confirm-name" class="font-bold text-brand-text"></span> הודעת וואטסאפ עם פרטי התור</p>
+    </div>
+    <div class="px-6 pb-6 flex flex-col gap-3">
+      <button type="button" onclick="waConfirmSend()"
+        class="w-full py-3 rounded-xl font-bold text-sm text-white flex items-center justify-center gap-2 transition-all hover:opacity-90 shadow-mint"
+        style="background:#25D366">
+        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        כן, שלח תזכורת
+      </button>
+      <button type="button" onclick="waConfirmReject()"
+        class="w-full py-3 rounded-xl font-bold text-sm border border-brand-border text-brand-muted bg-brand-bg hover:bg-brand-border/30 transition-all">
+        לא תודה
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ APPOINTMENT MODAL -->
+<div id="apt-modal" class="fixed inset-0 z-50 hidden items-end sm:items-center justify-center p-0 sm:p-4">
+  <div class="absolute inset-0 bg-brand-text/30 backdrop-blur-sm" onclick="closeAppointmentModal()"></div>
+  <div class="modal-enter relative w-full sm:max-w-2xl max-h-[95vh] sm:max-h-[90vh]
+              bg-brand-surface border border-brand-border rounded-t-3xl sm:rounded-2xl shadow-2xl flex flex-col overflow-hidden">
+    <div class="flex items-center justify-between px-5 py-4 sm:px-8 sm:py-5 border-b border-brand-border bg-brand-bg flex-shrink-0">
+      <div>
+        <h2 id="apt-modal-title" class="text-lg sm:text-2xl font-bold text-brand-text tracking-tight">תור חדש</h2>
+        <p class="text-xs sm:text-sm text-brand-muted mt-0.5">תאמו תור ללקוח קיים</p>
+      </div>
+      <button type="button" onclick="closeAppointmentModal()" class="p-2 rounded-xl text-brand-muted hover:text-brand-text hover:bg-brand-border/50 transition-colors bg-brand-surface border border-brand-border flex-shrink-0">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+      </button>
+    </div>
+
+    <form id="apt-form" onsubmit="submitAppointment(event)" class="overflow-y-auto flex-1 px-5 py-5 sm:px-8 sm:py-7 space-y-5 sm:space-y-6">
+      <div>
+        <div class="flex items-center gap-3 mb-4">
+          <div class="w-8 h-8 rounded-lg bg-brand-c1/50 text-blue-800 flex items-center justify-center">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+          </div>
+          <span class="text-lg font-bold text-brand-text">פרטי תור</span>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+          <div class="sm:col-span-2 space-y-1.5">
+            <label class="block text-sm font-semibold text-brand-text ml-1">בחר לקוח <span class="text-brand-danger">*</span></label>
+            <select id="apt-customer" required
+              class="w-full bg-brand-bg border border-brand-border rounded-xl px-4 py-3 text-sm text-brand-text">
+              <option value="">— בחרו מהרשימה —</option>
+            </select>
+          </div>
+          <div class="sm:col-span-2 space-y-4">
+            <div class="space-y-1.5">
+              <label class="block text-sm font-semibold text-brand-text ml-1">תאריך <span class="text-brand-danger">*</span></label>
+              <input id="apt-date" type="date" required dir="ltr"
+                class="w-full bg-brand-bg border border-brand-border rounded-xl px-4 py-3 text-sm text-brand-text transition-colors">
+            </div>
+            <div class="space-y-2">
+              <label class="block text-sm font-semibold text-brand-text ml-1">שעה <span class="text-brand-danger">*</span></label>
+              <input id="apt-time-hidden" type="hidden">
+              <div class="flex items-center gap-2" dir="ltr">
+                <div class="flex-1 space-y-1">
+                  <div class="text-[10px] text-brand-muted font-semibold uppercase tracking-wider text-center">שעה</div>
+                  <select id="apt-hour" onchange="updateAptTime()"
+                    class="w-full bg-brand-bg border border-brand-border rounded-xl px-3 py-3 text-xl font-bold text-brand-text text-center transition-colors cursor-pointer">
+                    <option value="">--</option>
+                  </select>
+                </div>
+                <span class="text-3xl font-black text-brand-muted pb-1">:</span>
+                <div class="flex-1 space-y-1">
+                  <div class="text-[10px] text-brand-muted font-semibold uppercase tracking-wider text-center">דקות</div>
+                  <select id="apt-minute" onchange="updateAptTime()"
+                    class="w-full bg-brand-bg border border-brand-border rounded-xl px-3 py-3 text-xl font-bold text-brand-text text-center transition-colors cursor-pointer">
+                    <option value="">--</option>
+                  </select>
+                </div>
+              </div>
+              <div id="apt-time-error" class="hidden text-xs text-brand-danger font-semibold">יש לבחור שעה ודקות</div>
+            </div>
+          </div>
+          <div class="space-y-1.5">
+            <label class="block text-sm font-semibold text-brand-text ml-1">סוג שירות</label>
+            <input id="apt-service" type="text" placeholder="לדוגמה: החלפת שמן, טסט, בלמים..."
+              class="w-full bg-brand-bg border border-brand-border rounded-xl px-4 py-3 text-sm text-brand-text placeholder:text-brand-muted transition-colors">
+          </div>
+        </div>
+      </div>
+
+      <hr class="border-brand-border">
+
+      <div>
+        <div class="flex items-center gap-3 mb-4">
+          <div class="w-8 h-8 rounded-lg bg-brand-c4/50 text-emerald-800 flex items-center justify-center">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          </div>
+          <span class="text-lg font-bold text-brand-text">סטטוס והערות</span>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+          <div class="space-y-1.5">
+            <label class="block text-sm font-semibold text-brand-text ml-1">סטטוס</label>
+            <select id="apt-status" class="w-full bg-brand-bg border border-brand-border rounded-xl px-4 py-3 text-sm text-brand-text">
+              <option value="scheduled">ממתין</option>
+              <option value="in_progress">בביצוע</option>
+              <option value="completed">הושלם</option>
+              <option value="cancelled">בוטל</option>
+            </select>
+          </div>
+          <div class="space-y-1.5 sm:col-span-2">
+            <label class="block text-sm font-semibold text-brand-text ml-1">הערות</label>
+            <input id="apt-notes" type="text" placeholder="אופציונלי"
+              class="w-full bg-brand-bg border border-brand-border rounded-xl px-4 py-3 text-sm text-brand-text placeholder:text-brand-muted">
+          </div>
+        </div>
+      </div>
+    </form>
+
+    <div class="px-5 py-4 sm:px-8 sm:py-5 border-t border-brand-border bg-brand-bg flex-shrink-0 flex flex-col-reverse sm:flex-row gap-3 sm:justify-end">
+      <button type="button" onclick="closeAppointmentModal()"
+        class="w-full sm:w-auto px-6 py-3 sm:py-2.5 rounded-xl border border-brand-border text-brand-text bg-brand-surface hover:bg-brand-border/30 font-bold transition-all text-sm shadow-sm">ביטול</button>
+      <button type="submit" form="apt-form" id="apt-save-btn"
+        class="w-full sm:w-auto px-8 py-3 sm:py-2.5 rounded-xl gradient-btn text-brand-text font-bold shadow-pastel transition-all flex items-center justify-center gap-2 text-sm border border-white/50">
+        <span id="apt-save-label">שמור תור</span>
+        <div id="apt-save-spin" class="hidden w-4 h-4 border-2 border-brand-text border-t-transparent rounded-full spin"></div>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ VEHICLE INFO PANEL -->
+<div id="vpanel" class="fixed inset-0 z-50 hidden flex items-end sm:items-center justify-center sm:justify-end p-0 sm:p-4">
+  <div class="absolute inset-0 bg-brand-text/20 backdrop-blur-sm" onclick="closeVehiclePanel()"></div>
+  <div id="vpanel-inner" class="relative w-full sm:w-96 max-h-[85vh] sm:max-h-[90vh]
+       bg-brand-surface border border-brand-border
+       rounded-t-3xl sm:rounded-2xl shadow-2xl flex flex-col overflow-hidden
+       translate-y-full sm:translate-y-0 sm:translate-x-full transition-transform duration-300">
+
+    <div class="flex items-center justify-between px-5 py-4 border-b border-brand-border bg-brand-bg flex-shrink-0">
+      <div class="flex items-center gap-3">
+        <div class="w-8 h-8 rounded-lg bg-brand-c3/50 text-purple-800 flex items-center justify-center text-lg">🚗</div>
+        <div>
+          <div id="vp-name" class="font-bold text-brand-text text-sm"></div>
+          <div class="text-xs text-brand-muted">פרטי רכב ממשרד התחבורה</div>
+        </div>
+      </div>
+      <button onclick="closeVehiclePanel()" class="p-2 rounded-xl text-brand-muted hover:bg-brand-bg border border-brand-border transition-colors">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+        </svg>
+      </button>
+    </div>
+
+    <div class="overflow-y-auto flex-1 p-5 space-y-4">
+      <div id="vp-loading" class="flex flex-col items-center justify-center py-16 gap-3 text-brand-muted">
+        <div class="w-8 h-8 border-3 border-brand-c2 border-t-brand-c3 rounded-full spin"></div>
+        <span class="text-sm">טוען נתוני רכב...</span>
+      </div>
+      <div id="vp-error" class="hidden flex-col items-center justify-center py-16 text-center gap-3">
+        <div class="text-4xl">🔍</div>
+        <div class="text-brand-text font-bold">לא נמצאו נתונים</div>
+        <div class="text-brand-muted text-sm">לוחית הרישוי לא נמצאה במאגר</div>
+      </div>
+      <div id="vp-data" class="hidden space-y-4">
+        <div class="flex justify-center py-2">
+          <div id="vp-plate" class="inline-flex items-center px-5 py-2.5 rounded-lg plate-badge relative pl-8 text-xl tracking-[0.3em] font-mono"></div>
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          <div class="bg-brand-bg rounded-xl p-3 border border-brand-border">
+            <div class="text-[10px] text-brand-muted uppercase tracking-wider mb-1">יצרן</div>
+            <div id="vp-make" class="text-sm font-bold text-brand-text"></div>
+          </div>
+          <div class="bg-brand-bg rounded-xl p-3 border border-brand-border">
+            <div class="text-[10px] text-brand-muted uppercase tracking-wider mb-1">דגם</div>
+            <div id="vp-model" class="text-sm font-bold text-brand-text"></div>
+          </div>
+          <div class="bg-brand-bg rounded-xl p-3 border border-brand-border">
+            <div class="text-[10px] text-brand-muted uppercase tracking-wider mb-1">שנת ייצור</div>
+            <div id="vp-year" class="text-sm font-bold text-brand-text"></div>
+          </div>
+          <div class="bg-brand-bg rounded-xl p-3 border border-brand-border">
+            <div class="text-[10px] text-brand-muted uppercase tracking-wider mb-1">צבע</div>
+            <div id="vp-color" class="text-sm font-bold text-brand-text"></div>
+          </div>
+        </div>
+        <div id="vp-test-card" class="rounded-xl p-4 border flex items-center gap-3">
+          <div id="vp-test-icon" class="text-2xl flex-shrink-0"></div>
+          <div>
+            <div class="text-[10px] text-brand-muted uppercase tracking-wider mb-0.5">תוקף טסט</div>
+            <div id="vp-test" class="text-sm font-bold text-brand-text"></div>
+          </div>
+        </div>
+        <div>
+          <div class="text-xs font-bold text-brand-muted uppercase tracking-wider mb-3">נתונים טכניים נוספים</div>
+          <div id="vp-raw" class="grid grid-cols-2 gap-2 text-xs"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Toast -->
+<div id="toast"
+  class="fixed bottom-6 left-1/2 -translate-x-1/2 z-[100] px-6 py-3 rounded-2xl bg-brand-text text-white text-sm font-bold shadow-2xl transition-all duration-300 opacity-0 translate-y-4 pointer-events-none">
+</div>
+
+<!-- Scripts -->
+<script src="/static/js/main.js"></script>
+<script src="/static/js/customers.js"></script>
+<script src="/static/js/repairs.js"></script>
+<script src="/static/js/appointments.js"></script>
+<script src="/static/js/vehicle_check.js"></script>
+</body>
+</html>

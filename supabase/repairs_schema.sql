@@ -41,9 +41,14 @@ ALTER TABLE public.repairs ADD COLUMN IF NOT EXISTS notes text;
 ALTER TABLE public.repairs ADD COLUMN IF NOT EXISTS status text DEFAULT 'open';
 UPDATE public.repairs SET status = 'open' WHERE status IS NULL;
 
-ALTER TABLE public.repairs ALTER COLUMN status SET DEFAULT 'open';
+DO $$
+BEGIN
+  ALTER TABLE public.repairs ALTER COLUMN status SET DEFAULT 'open';
+EXCEPTION
+  WHEN undefined_column THEN NULL;
+END $$;
 
--- 4) customer_id — אותו טיפוס כמו customers.id (uuid / bigint וכו'), ואז FK בנפרד
+-- 4) customer_id — אותו טיפוס כמו customers.id, ואז FK בנפרד
 DO $$
 DECLARE
   id_type text;
@@ -62,9 +67,8 @@ BEGIN
     RAISE EXCEPTION 'לא נמצא public.customers.id — צור קודם את טבלת הלקוחות';
   END IF;
 
-  -- %s: שם טיפוס מ-pg_catalog (לא קלט משתמש)
   EXECUTE format(
-    'ALTER TABLE public.repairs ADD COLUMN IF NOT EXISTS customer_id %s',
+    'ALTER TABLE public.repairs ADD COLUMN IF NOT EXISTS customer_id %I',
     id_type
   );
 END $$;
@@ -79,6 +83,12 @@ ALTER TABLE public.repairs
   ON DELETE RESTRICT;
 
 COMMENT ON COLUMN public.repairs.status IS 'open | in_progress | done | cancelled';
+
+-- שדות תמחור חדשים (17/01/2025)
+-- החלפת השדות הישנים (labor_cost, parts_cost, final_price) בשדה אחד - items כ-JSON
+ALTER TABLE public.repairs ADD COLUMN IF NOT EXISTS items jsonb DEFAULT '[]'::jsonb;
+ALTER TABLE public.repairs ADD COLUMN IF NOT EXISTS vat_enabled boolean DEFAULT true;
+ALTER TABLE public.repairs ADD COLUMN IF NOT EXISTS final_price numeric;
 
 -- ═══════════════════════════════════════════════════════════════════════════
 -- RLS (אופציונלי): אם מפעילים על repairs חייבת מדיניות, אחרת ה-API ייחסם.

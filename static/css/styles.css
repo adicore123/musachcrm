@@ -1,0 +1,71 @@
+body {
+  background-color: #f8fafc;
+}
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 6px; }
+::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+
+input, select, textarea { transition: all 0.2s ease; }
+input:focus, select:focus, textarea:focus {
+  outline: none;
+  border-color: #7BC9EA !important;
+  box-shadow: 0 0 0 4px rgba(123, 201, 234, 0.3);
+  background-color: #ffffff !important;
+}
+
+.gradient-btn {
+  background: linear-gradient(135deg, #7BEAD4, #7BC9EA, #7B91EA, #7BEAD4);
+  background-size: 300% 300%;
+  animation: gradientShift 6s ease infinite;
+}
+
+.gradient-text {
+  background: linear-gradient(135deg, #7BC9EA, #7B91EA);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.fade-up { animation: fadeUp 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+
+@keyframes spin { to { transform: rotate(360deg); } }
+.spin { animation: spin 0.8s linear infinite; }
+
+.modal-enter { animation: fadeUp 0.3s cubic-bezier(0.16, 1, 0.3, 1); }
+
+/* License Plate Styling */
+.plate-badge {
+  background: linear-gradient(to bottom, #fbbf24, #f59e0b);
+  color: #000;
+  font-weight: 800;
+  border: 1px solid #d97706;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.4), 0 2px 4px rgba(0,0,0,0.1);
+}
+.plate-badge::before {
+  content: 'IL';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  background: #2563eb;
+  color: white;
+  font-size: 0.5rem;
+  display: flex;
+  align-items: center;
+  padding: 0 4px;
+  border-top-left-radius: 4px;
+  border-bottom-left-radius: 4px;
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  letter-spacing: 1px;
+}
