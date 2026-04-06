@@ -213,13 +213,11 @@ function getCategoryIcon(cat) {
 
 function renderPriceListTable() {
   const container = document.getElementById('pl-content');
-  const loading = document.getElementById('pl-loading');
-  const empty = document.getElementById('pl-empty');
   const filter = document.getElementById('pl-category-filter')?.value || '';
   
-  hide(loading);
-  hide(empty);
-  hide(container);
+  hide('pl-loading');
+  hide('pl-empty');
+  hide('pl-content');
   
   let items = priceList;
   if (filter) {
@@ -227,11 +225,11 @@ function renderPriceListTable() {
   }
   
   if (!items.length) {
-    show(empty);
+    show('pl-empty');
     return;
   }
   
-  show(container);
+  show('pl-content');
   
   // Group by category
   const grouped = {};
