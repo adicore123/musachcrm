@@ -377,18 +377,58 @@
         <div class="sm:col-span-2">
           <div class="flex items-center justify-between mb-2">
             <label class="block text-sm font-semibold text-brand-text">פריטי התיקון</label>
-            <div class="flex gap-2">
-              <button type="button" onclick="openPriceListModal()"
-                class="text-xs px-3 py-1.5 rounded-lg font-bold border border-brand-border text-brand-muted hover:bg-brand-bg transition-all">
-                🔧 מחירון
-              </button>
-              <button type="button" onclick="addRepairItem()"
-                class="text-xs px-3 py-1.5 rounded-lg font-bold text-white transition-all hover:opacity-90"
-                style="background: linear-gradient(135deg, #7BEAD4, #7BC9EA);">
-                + הוסף פריט
-              </button>
-            </div>
+            <button type="button" onclick="openPriceListModal()"
+              class="text-xs px-3 py-1.5 rounded-lg font-bold border border-brand-border text-brand-muted hover:bg-brand-bg transition-all">
+              🔧 מחירון
+            </button>
           </div>
+
+          <!-- Toggle Tabs -->
+          <div class="flex rounded-xl bg-brand-bg border border-brand-border p-1 mb-3">
+            <button type="button" onclick="setItemEntryMode('picker')" id="item-mode-picker" class="flex-1 py-2 px-3 rounded-lg text-sm font-bold transition-all">📋 מהמחירון</button>
+            <button type="button" onclick="setItemEntryMode('manual')" id="item-mode-manual" class="flex-1 py-2 px-3 rounded-lg text-sm font-bold text-brand-muted transition-all">✏️ ידני</button>
+          </div>
+
+          <!-- Mode 1: Price List Picker -->
+          <div id="item-picker-mode">
+            <select id="price-list-select" onchange="addFromPicker(this.value)"
+              class="w-full bg-brand-bg border border-brand-border rounded-xl px-4 py-3 text-sm text-brand-text">
+              <option value="">— בחר פריט מהמחירון —</option>
+            </select>
+          </div>
+
+          <!-- Mode 2: Manual Entry -->
+          <div id="item-manual-mode" class="hidden">
+            <div class="grid grid-cols-2 gap-2 mb-2">
+              <select id="manual-category"
+                class="bg-brand-bg border border-brand-border rounded-xl px-3 py-2 text-sm text-brand-text">
+                <option value="oils">שמנים</option>
+                <option value="filters">מסננים</option>
+                <option value="brakes">בלמים</option>
+                <option value="engine">חלקי מנוע</option>
+                <option value="labor">עבודה</option>
+                <option value="other">אחר</option>
+              </select>
+              <input id="manual-name" type="text" placeholder="שם הפריט"
+                class="bg-brand-bg border border-brand-border rounded-xl px-3 py-2 text-sm text-brand-text">
+              <input id="manual-part-cost" type="number" min="0" step="0.01" placeholder="עלות חלק" dir="ltr"
+                class="bg-brand-bg border border-brand-border rounded-xl px-3 py-2 text-sm text-brand-text text-left">
+              <input id="manual-sale-price" type="number" min="0" step="0.01" placeholder="מחיר מכירה" dir="ltr"
+                class="bg-brand-bg border border-brand-border rounded-xl px-3 py-2 text-sm text-brand-text text-left">
+              <input id="manual-labor-cost" type="number" min="0" step="0.01" placeholder="עבודה" dir="ltr"
+                class="bg-brand-bg border border-brand-border rounded-xl px-3 py-2 text-sm text-brand-text text-left">
+              <div class="flex items-center gap-2">
+                <input type="checkbox" id="save-to-price-list" class="w-4 h-4 rounded border-brand-border">
+                <label for="save-to-price-list" class="text-xs text-brand-muted">שמור למחירון</label>
+              </div>
+            </div>
+            <button type="button" onclick="addManualItem()"
+              class="w-full py-2 rounded-xl font-bold text-sm text-white transition-all hover:opacity-90"
+              style="background: linear-gradient(135deg, #7BEAD4, #7BC9EA);">
+              + הוסף פריט
+            </button>
+          </div>
+
           <div class="bg-brand-bg border border-brand-border rounded-xl p-3 mb-3">
             <div class="grid grid-cols-12 gap-2 text-xs font-bold text-brand-muted mb-2 px-2">
               <div class="col-span-4">פריט</div>

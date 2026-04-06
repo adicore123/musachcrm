@@ -389,6 +389,111 @@ function removeRepairItem(index) {
   calculateRepairFinalPrice();
 }
 
+// Dual-Mode Item Entry
+let itemEntryMode = 'picker';
+
+function setItemEntryMode(mode) {
+  itemEntryMode = mode;
+  const pickerMode = document.getElementById('item-picker-mode');
+  const manualMode = document.getElementById('item-manual-mode');
+  const pickerBtn = document.getElementById('item-mode-picker');
+  const manualBtn = document.getElementById('item-mode-manual');
+  
+  if (mode === 'picker') {
+    pickerMode.classList.remove('hidden');
+    manualMode.classList.add('hidden');
+    pickerBtn.classList.add('bg-brand-c1', 'text-brand-text');
+    pickerBtn.classList.remove('text-brand-muted');
+    manualBtn.classList.remove('bg-brand-c1', 'text-brand-text');
+    manualBtn.classList.add('text-brand-muted');
+  } else {
+    pickerMode.classList.add('hidden');
+    manualMode.classList.remove('hidden');
+    manualBtn.classList.add('bg-brand-c1', 'text-brand-text');
+    manualBtn.classList.remove('text-brand-muted');
+    pickerBtn.classList.remove('bg-brand-c1', 'text-brand-text');
+    pickerBtn.classList.add('text-brand-muted');
+  }
+}
+
+function renderPriceListPicker() {
+  const select = document.getElementById('price-list-select');
+  if (!select || !priceList.length) return;
+  
+  const grouped = {};
+  priceList.forEach(item => {
+    if (!grouped[item.category]) grouped[item.category] = [];
+    grouped[item.category].push(item);
+  });
+  
+  const categories = ['oils', 'filters', 'brakes', 'engine', 'labor', 'other'];
+  let html = '<option value="">— בחר פריט מהמחירון —</option>';
+  
+  categories.forEach(cat => {
+    if (grouped[cat] && grouped[cat].length > 0) {
+      html += `<optgroup label="${getCategoryLabel(cat)}">`;
+      grouped[cat].forEach(item => {
+        html += `<option value="${item.id}">${esc(item.name)} - ₪${(item.sale_price || 0) + (item.labor_cost || 0)}</option>`;
+      });
+      html += '</optgroup>';
+    }
+  });
+  
+  select.innerHTML = html;
+}
+
+function addFromPicker(value) {
+  if (!value) return;
+  const item = priceListMap[value];
+  if (item) {
+    addRepairItem(item.category, item.name, item.part_cost || 0, item.sale_price || 0, item.labor_cost || 0);
+    document.getElementById('price-list-select').value = '';
+    showToast(`${item.name} נוסף לתיקון`);
+  }
+}
+
+async function addManualItem() {
+  const category = document.getElementById('manual-category').value;
+  const name = document.getElementById('manual-name').value.trim();
+  const partCost = parseFloat(document.getElementById('manual-part-cost').value) || 0;
+  const salePrice = parseFloat(document.getElementById('manual-sale-price').value) || 0;
+  const laborCost = parseFloat(document.getElementById('manual-labor-cost').value) || 0;
+  const saveToList = document.getElementById('save-to-price-list').checked;
+  
+  if (!name) {
+    alert('חובה להזין שם לפריט');
+    return;
+  }
+  
+  addRepairItem(category, name, partCost, salePrice, laborCost);
+  
+  if (saveToList) {
+    try {
+      const res = await fetch(`${API}/price-list`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ category, name, part_cost: partCost, sale_price: salePrice, labor_cost: laborCost })
+      });
+      if (res.ok) {
+        await loadPriceList();
+        renderPriceListPicker();
+        showToast(`${name} נוסף למחירון`);
+      }
+    } catch (e) {
+      console.error('Error saving to price list:', e);
+    }
+  } else {
+    showToast(`${name} נוסף לתיקון`);
+  }
+  
+  // Clear manual inputs
+  document.getElementById('manual-name').value = '';
+  document.getElementById('manual-part-cost').value = '';
+  document.getElementById('manual-sale-price').value = '';
+  document.getElementById('manual-labor-cost').value = '';
+  document.getElementById('save-to-price-list').checked = false;
+}
+
 function renderRepairItems() {
   const container = document.getElementById('r-items-container');
   if (!container) return;
@@ -396,7 +501,7 @@ function renderRepairItems() {
   if (repairItems.length === 0) {
     container.innerHTML = `
       <div class="text-center py-4 text-brand-muted text-sm">
-        לחץ על "הוסף פריט" או בחר מהמחירון
+        בחר מהמחירון או הוסף פריט ידני
       </div>
     `;
     return;
@@ -458,7 +563,10 @@ function calculateRepairFinalPrice() {
 
 function openRepairModal(editId, preselectCustomerId) {
   populateRepairCustomerSelect();
-  loadPriceList();
+  loadPriceList().then(() => {
+    renderPriceListPicker();
+    setItemEntryMode('picker');
+  });
   currentRepairEditId = editId || null;
   clearTimeout(repairDebounce);
   repairVehicleSnapshot = {};
