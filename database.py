@@ -4,7 +4,10 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-db = create_client(
-    os.getenv("SUPABASE_URL"),
-    os.getenv("SUPABASE_KEY")
-)
+SUPABASE_URL = os.getenv("SUPABASE_URL")
+SUPABASE_KEY = os.getenv("SUPABASE_KEY")
+
+if not SUPABASE_URL or not SUPABASE_KEY:
+    raise RuntimeError("חסרים משתני סביבה: SUPABASE_URL ו/או SUPABASE_KEY")
+
+db = create_client(SUPABASE_URL, SUPABASE_KEY)
