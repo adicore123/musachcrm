@@ -212,26 +212,24 @@ function getCategoryIcon(cat) {
 }
 
 function renderPriceListTable() {
-  const container = document.getElementById('pl-content');
-  const loading = document.getElementById('pl-loading');
-  const empty = document.getElementById('pl-empty');
   const filter = document.getElementById('pl-category-filter')?.value || '';
-  
-  hide(loading);
-  hide(empty);
-  hide(container);
-  
+
+  hide('pl-loading');
+  hide('pl-empty');
+  hide('pl-content');
+
   let items = priceList;
   if (filter) {
     items = items.filter(item => item.category === filter);
   }
-  
+
   if (!items.length) {
-    show(empty);
+    show('pl-empty');
     return;
   }
-  
-  show(container);
+
+  show('pl-content');
+  const container = document.getElementById('pl-content');
   
   // Group by category
   const grouped = {};
@@ -272,9 +270,12 @@ function renderPriceListTable() {
 }
 
 function openPriceListModal() {
+  document.getElementById('price-list-modal').classList.remove('hidden');
+  document.getElementById('price-list-modal').classList.add('flex');
+  show('pl-loading');
+  hide('pl-empty');
+  hide('pl-content');
   loadPriceList().then(() => {
-    document.getElementById('price-list-modal').classList.remove('hidden');
-    document.getElementById('price-list-modal').classList.add('flex');
     renderPriceListTable();
   });
 }
