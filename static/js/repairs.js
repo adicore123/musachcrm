@@ -404,24 +404,12 @@ function renderRepairItems() {
   
   container.innerHTML = repairItems.map((item, index) => {
     const itemTotal = (parseFloat(item.sale_price) || 0) + (parseFloat(item.labor_cost) || 0);
-    const categoryLabel = getCategoryLabel(item.category);
     
     return `
     <div class="grid grid-cols-12 gap-2 items-center bg-white border border-brand-border rounded-xl p-2">
       <div class="col-span-4">
-        <div class="flex items-center gap-2">
-          <select onchange="repairItems[${index}].category = this.value; renderRepairItems();"
-            class="text-xs bg-brand-bg border border-brand-border rounded-lg px-2 py-1.5 text-brand-text">
-            <option value="oils" ${item.category === 'oils' ? 'selected' : ''}>שמנים</option>
-            <option value="filters" ${item.category === 'filters' ? 'selected' : ''}>מסננים</option>
-            <option value="brakes" ${item.category === 'brakes' ? 'selected' : ''}>בלמים</option>
-            <option value="engine" ${item.category === 'engine' ? 'selected' : ''}>חלקי מנוע</option>
-            <option value="labor" ${item.category === 'labor' ? 'selected' : ''}>עבודה</option>
-            <option value="other" ${item.category === 'other' ? 'selected' : ''}>אחר</option>
-          </select>
-        </div>
         <input type="text" placeholder="שם הפריט" value="${escAttr(item.name)}"
-          class="w-full mt-1 bg-brand-bg border border-brand-border rounded-lg px-2 py-1.5 text-sm text-brand-text"
+          class="w-full bg-brand-bg border border-brand-border rounded-lg px-2 py-1.5 text-sm text-brand-text"
           onchange="repairItems[${index}].name = this.value">
       </div>
       <div class="col-span-2">
